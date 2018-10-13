@@ -1,5 +1,14 @@
+*.log.*.gz
+*.log
+
 .gradle
 /build/
+.vscode/
+.settings/
+.project
+
+.idea/
+*.iml
 
 # Ignore Gradle GUI config
 gradle-app.setting

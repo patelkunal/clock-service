@@ -1,0 +1,52 @@
+plugins {
+    id "java"
+    id "org.springframework.boot" version "2.0.0.RELEASE"
+    id "io.spring.dependency-management" version "1.0.4.RELEASE"
+}
+
+group = 'org.coderearth.windowsdeployments'
+version = '0.1.SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile('com.google.guava:guava:23.0')
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+        exclude module: 'hibernate-validator'
+        exclude module: 'log4j-to-slf4j'
+        exclude module: 'jul-to-slf4j'
+    }
+    compile('org.springframework.boot:spring-boot-starter-jetty') {
+        exclude module: 'websocket-server'
+        exclude module: 'javax-websocket-server-impl'
+    }
+
+    compile('org.projectlombok:lombok:1.16.20') // lombok should be at compile time only, not required at runtime
+    testCompile 'junit:junit:4.12'
+}
+
+clean.doLast {
+    file('.classpath').delete()
+    file('.project').delete()
+    file('.settings').deleteDir()
+    file('.gradle').deleteDir()
+
+    file('logs').deleteDir()
+    file('out').deleteDir()
+    file('bin').deleteDir()
+}
+
+bootRun {
+    systemProperties = System.properties
+    main = "org.coderearth.windowsdeployments.App"
+}
+
+bootJar {
+    mainClassName = "org.coderearth.windowsdeployments.App"
+}
